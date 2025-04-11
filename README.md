@@ -25,7 +25,7 @@ Before you begin, ensure you have:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/attendance-system.git
+   git clone https://github.com/okonueugene/Laravel-TAD-PHP.git
    cd attendance-system
    ```
 
