@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AttendanceDeviceController;
 
-Route::get('/attendance-device', [AttendanceDeviceController::class, 'index']);
+Route::get('/admin/attendance-device', [AttendanceDeviceController::class, 'index']);
+Route::get('/admin/attendance/monthly', [AttendanceDeviceController::class, 'monthlyAttendance'])->name('admin.attendance.monthly');
+Route::get('/admin/employee/{pin}/attendance', [AttendanceDeviceController::class, 'employeeAttendanceDetails'])->name('admin.employee.attendance.details');
 
 /*
 |--------------------------------------------------------------------------
