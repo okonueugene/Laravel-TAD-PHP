@@ -17,10 +17,19 @@ class Attendance extends Model
         'work_code',
     ];
 
-    public function employee()
+    /**
+     * Get the employee's actual pin (strip the first digit).
+     */
+    public function getRealPinAttribute()
     {
-        return $this->belongsTo(Employee::class, 'pin', 'pin');
+        return substr($this->pin, 1);
     }
 
-    
+    /**
+     * Custom relationship to Employee model via derived real_pin.
+     */
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'real_pin', 'pin');
+    }
 }

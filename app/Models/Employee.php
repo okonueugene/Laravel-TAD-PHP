@@ -23,8 +23,32 @@ class Employee extends Model
         'acc_no',
     ];
 
-    public function attendances()
+    /**
+     * Clock-in attendances (prefix 1).
+     */
+    public function clockIns()
     {
-        return $this->hasMany(Attendance::class, 'pin', 'pin');
+        return $this->hasMany(Attendance::class, 'pin', 'pin')
+            ->whereRaw("LEFT(pin, 1) = '1'")
+            ->whereColumn('employees.pin', '=', \DB::raw("SUBSTRING(attendances.pin, 2)"));
+    }
+
+    /**
+     * Clock-out attendances (prefix 2).
+     */
+    public function clockOuts()
+    {
+        return $this->hasMany(Attendance::class, 'pin', 'pin')
+            ->whereRaw("LEFT(pin, 1) = '2'")
+            ->whereColumn('employees.pin', '=', \DB::raw("SUBSTRING(attendances.pin, 2)"));
+    }
+
+    /**
+     * Get all attendances via manual filtering (for flexibility).
+     */
+    public function getAttendancesAttribute()
+    {
+        return Attendance::whereRaw("SUBSTRING(pin, 2) = ?", [$this->pin])->get();
     }
 }
+
